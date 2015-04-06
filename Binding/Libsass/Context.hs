@@ -1,7 +1,7 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-module Binding.Sass.Context where
+module Binding.Libsass.Context where
 
-import           Binding.Sass.Types
+import           Binding.Libsass.Types
 import           Foreign
 import           Foreign.C.String
 import           Foreign.C.Types

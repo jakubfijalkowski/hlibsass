@@ -1,5 +1,5 @@
 {-# LANGUAGE EmptyDataDecls #-}
-module Binding.Sass.Types where
+module Binding.Libsass.Types where
 
 import           Foreign
 import           Foreign.C.String
