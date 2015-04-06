@@ -24,7 +24,8 @@ library
     Binding.Libsass,
     Binding.Libsass.Types,
     Binding.Libsass.Wrappers,
-    Binding.Libsass.Context
+    Binding.Libsass.Context,
+    Binding.Libsass.Functions
   build-depends:       base >=4.7 && <4.8
   hs-source-dirs:      .
   default-language:    Haskell2010
