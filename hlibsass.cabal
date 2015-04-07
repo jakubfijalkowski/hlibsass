@@ -11,10 +11,13 @@ build-type:          Custom
 cabal-version:       >=1.10
 
 extra-source-files:
+  libsass/*.cpp
+  libsass/*.c
   libsass/*.h
   libsass/*.hpp
   libsass/b64/*.h
   libsass/posix/*.h
+  libsass/posix/*.c
   libsass/utf8/*.h
   libsass/Makefile
   libsass/LICENSE
