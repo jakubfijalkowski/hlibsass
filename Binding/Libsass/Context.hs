@@ -16,8 +16,8 @@ foreign import ccall unsafe "sass_context.h" sass_make_file_context
 -- | Creates and initializes a data context, ie. context that parses string
 --   instead of a file.
 --
---   WARNING! Do not pass 'CString' acquired with 'withCString' as this will
---   result in munmap_chunk error(I don't know why).
+--   WARNING! The string that this function takes is released by the libsass
+--   during cleanup. You must not deallocate it.
 foreign import ccall unsafe "sass_context.h" sass_make_data_context
     :: CString
     -> IO (Ptr SassDataContext)
