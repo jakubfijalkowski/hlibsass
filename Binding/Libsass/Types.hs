@@ -6,6 +6,7 @@ import           Foreign.C.String
 
 -- From sass.h
 
+-- | Defines output style of compiled CSS.
 data SassOutputStyle = SassStyleNested
                      | SassStyleExpanded
                      | SassStyleCompact
@@ -109,11 +110,14 @@ instance Enum SassTag where
     toEnum 7 = SassError
     toEnum 8 = SassWarning
 
-data SassSeparator = SassComa | SassSpace deriving (Eq, Show)
+-- ^ Separator used in Sass lists.
+data SassSeparator = SassSeparatorComma
+                   | SassSeparatorSpace
+                   deriving (Eq, Show)
 
 instance Enum SassSeparator where
-    fromEnum SassComa = 0
-    fromEnum SassSpace  = 1
+    fromEnum SassSeparatorComma = 0
+    fromEnum SassSeparatorSpace  = 1
 
-    toEnum 0 = SassComa
-    toEnum 1 = SassSpace
+    toEnum 0 = SassSeparatorComma
+    toEnum 1 = SassSeparatorSpace
