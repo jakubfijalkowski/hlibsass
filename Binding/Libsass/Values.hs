@@ -110,7 +110,7 @@ foreign import ccall unsafe "sass_values.h" sass_color_set_b
 
 foreign import ccall unsafe "sass_values.h" sass_color_get_a
     :: Ptr SassValue
-    -> IO ()
+    -> IO CDouble
 
 foreign import ccall unsafe "sass_values.h" sass_color_set_a
     :: Ptr SassValue

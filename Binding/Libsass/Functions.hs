@@ -9,16 +9,18 @@ foreign import ccall unsafe "sass_function.h" sass_make_importer_list
     :: CSize
     -> IO SassImporterList
 
-foreign import ccall unsafe "sass_function.h" sass_importer_get_list_entry
-    :: SassImporterList
-    -> CSize
-    -> IO SassImporterEntry
+-- Libsass lacks implementation of these functions.
 
-foreign import ccall unsafe "sass_function.h" sass_importer_set_list_entry
-    :: SassImporterList
-    -> CSize
-    -> SassImporterEntry
-    -> IO ()
+-- foreign import ccall unsafe "sass_function.h" sass_importer_get_list_entry
+--     :: SassImporterList
+--     -> CSize
+--     -> IO SassImporterEntry
+
+-- foreign import ccall unsafe "sass_function.h" sass_importer_set_list_entry
+--     :: SassImporterList
+--     -> CSize
+--     -> SassImporterEntry
+--     -> IO ()
 
 foreign import ccall unsafe "sass_function.h" sass_make_importer
     :: SassImporterFn

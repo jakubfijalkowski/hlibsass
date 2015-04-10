@@ -1,14 +1,21 @@
 name:                hlibsass
 version:             0.1.0.0
-synopsis:            Low-level bindings to libsass
 license:             MIT
 license-file:        LICENSE
-author:              Jakub Fijałkowski
+author:              Jakub Fijałkowski <fiolek94@gmail.com>
 maintainer:          fiolek94@gmail.com
--- copyright:           
 category:            Foreign
 build-type:          Custom
 cabal-version:       >=1.10
+stability:           experimental
+synopsis:            Low-level bindings to libsass 3.2.0-beta.5-16
+description:
+  This package provides (very) low level bindings to libsass. It uses libsass
+  compiled to static library, so if you use this in your project, you have to
+  link your project with C++ runtime. The easiest option is to pass @-pgml g++@
+  option to the ghc (preferably specified in .cabal file).
+  For documentation visit <https://github.com/sass/libsass>.
+
 
 extra-source-files:
   libsass/*.cpp
@@ -24,15 +31,15 @@ extra-source-files:
 
 library
   exposed-modules:
-    Binding.Libsass,
-    Binding.Libsass.Types,
-    Binding.Libsass.Wrappers,
-    Binding.Libsass.Context,
-    Binding.Libsass.Functions,
-    Binding.Libsass.Values
+      Binding.Libsass
+    , Binding.Libsass.Types
+    , Binding.Libsass.Wrappers
+    , Binding.Libsass.Context
+    , Binding.Libsass.Functions
+    , Binding.Libsass.Values
   build-depends:       base >=4.7 && <4.8
   hs-source-dirs:      .
   default-language:    Haskell2010
   default-extensions:  ForeignFunctionInterface
   extra-libraries:     sass
-  ghc-options:         -pgml g++
+  ghc-options:         -Wall -pgml g++

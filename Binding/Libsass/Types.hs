@@ -23,6 +23,7 @@ instance Enum SassOutputStyle where
     toEnum 1 = SassStyleExpanded
     toEnum 2 = SassStyleCompact
     toEnum 3 = SassStyleCompressed
+    toEnum u = error ("SassOutputStyle.toEnum: Cannot match " ++ show u)
 
 -- From sass_context.h
 
@@ -45,6 +46,7 @@ instance Enum SassCompilerState where
     toEnum 0 = SassCompilerCreated
     toEnum 1 = SassCompilerParsed
     toEnum 2 = SassCompilerExecuted
+    toEnum u = error ("SassCompilerState.toEnum: Cannot match " ++ show u)
 
 -- From sass_functions.h
 
@@ -109,6 +111,7 @@ instance Enum SassTag where
     toEnum 6 = SassNull
     toEnum 7 = SassError
     toEnum 8 = SassWarning
+    toEnum u = error ("SassTag.toEnum: Cannot match " ++ show u)
 
 -- ^ Separator used in Sass lists.
 data SassSeparator = SassSeparatorComma
@@ -121,3 +124,4 @@ instance Enum SassSeparator where
 
     toEnum 0 = SassSeparatorComma
     toEnum 1 = SassSeparatorSpace
+    toEnum u = error ("SassSeparator.toEnum: Cannot match " ++ show u)
