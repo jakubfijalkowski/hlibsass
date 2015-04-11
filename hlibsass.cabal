@@ -4,6 +4,7 @@ license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <fiolek94@gmail.com>
 maintainer:          fiolek94@gmail.com
+homepage:            https://github.com/jakubfijalkowski/hlibsass
 category:            Foreign
 build-type:          Custom
 cabal-version:       >= 1.10

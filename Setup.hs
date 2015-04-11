@@ -12,8 +12,8 @@ import           System.Directory                   (getCurrentDirectory)
 main = defaultMainWithHooks simpleUserHooks
   {
     preConf = \a f -> makeLibsass a f >> preConf simpleUserHooks a f
-  , copyHook = copyLibsass
   , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
+  , postCopy = copyLibsass
   , postClean = cleanLibsass
   }
 
@@ -39,14 +39,14 @@ updateExtraLibDirs localBuildInfo = do
         }
     }
 
-copyLibsass :: PackageDescription -> LocalBuildInfo -> UserHooks -> CopyFlags
-            -> IO ()
-copyLibsass pkg_descr lbi _ flags = do
+copyLibsass :: Args -> CopyFlags -> PackageDescription -> LocalBuildInfo -> IO ()
+copyLibsass _ flags pkg_descr lbi = do
     let libPref = libdir . absoluteInstallDirs pkg_descr lbi
                 . fromFlag . copyDest
                 $ flags
-    rawSystemExit (fromFlag $ copyVerbosity flags) "cp"
-        ["libsass/lib/libsass.a", libPref]
+    let verb = fromFlag $ copyVerbosity flags
+    rawSystemExit verb "mkdir" ["-p", libPref]
+    rawSystemExit verb "cp" ["libsass/lib/libsass.a", libPref]
 
 
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
