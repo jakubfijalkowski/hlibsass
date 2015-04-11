@@ -1,7 +1,7 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-module Binding.Libsass.Values where
+module Bindings.Libsass.Values where
 
-import           Binding.Libsass.Types
+import           Bindings.Libsass.Types
 import           Foreign
 import           Foreign.C
 

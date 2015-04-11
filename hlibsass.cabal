@@ -1,12 +1,12 @@
 name:                hlibsass
-version:             0.1.0.0
+version:             0.1.1.0
 license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <fiolek94@gmail.com>
 maintainer:          fiolek94@gmail.com
 category:            Foreign
 build-type:          Custom
-cabal-version:       >=1.10
+cabal-version:       >= 1.10
 stability:           experimental
 synopsis:            Low-level bindings to libsass
 description:
@@ -15,10 +15,6 @@ description:
   link your project with C++ runtime(which libsass does automatically - links
   with libstd++).
   For documentation visit <https://github.com/sass/libsass>.
-
-source-repository head
-  type:              git
-  location:          git://github.com/jakubfijalkowski/hlibsass.git
 
 extra-source-files:
   libsass/*.cpp
@@ -32,14 +28,18 @@ extra-source-files:
   libsass/Makefile
   libsass/LICENSE
 
+source-repository head
+  type:              git
+  location:          git://github.com/jakubfijalkowski/hlibsass.git
+
 library
   exposed-modules:
-      Binding.Libsass
-    , Binding.Libsass.Types
-    , Binding.Libsass.Wrappers
-    , Binding.Libsass.Context
-    , Binding.Libsass.Functions
-    , Binding.Libsass.Values
+      Bindings.Libsass
+    , Bindings.Libsass.Types
+    , Bindings.Libsass.Wrappers
+    , Bindings.Libsass.Context
+    , Bindings.Libsass.Functions
+    , Bindings.Libsass.Values
   build-depends:       base >= 4.7 && < 5
   hs-source-dirs:      .
   default-language:    Haskell2010

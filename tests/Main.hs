@@ -1,5 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
-import           Binding.Libsass
+import           Bindings.Libsass
 import           Foreign
 import           Foreign.C
 import           Test.Hspec

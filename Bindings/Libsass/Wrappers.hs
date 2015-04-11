@@ -1,7 +1,7 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-module Binding.Libsass.Wrappers where
+module Bindings.Libsass.Wrappers where
 
-import           Binding.Libsass.Types
+import           Bindings.Libsass.Types
 import           Foreign
 
 foreign import ccall safe "wrapper" mkSassImporterFn
