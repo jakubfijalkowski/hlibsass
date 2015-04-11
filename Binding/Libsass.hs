@@ -1,3 +1,7 @@
+-- |
+-- This is the main module of the library - it reexports rest of the library, so
+-- you should only import this one.
+
 {-# LANGUAGE ForeignFunctionInterface #-}
 module Binding.Libsass
   (

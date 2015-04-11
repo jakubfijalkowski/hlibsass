@@ -1,7 +1,9 @@
 import           Data.Maybe                         (fromJust)
 import           Distribution.PackageDescription
 import           Distribution.Simple
-import           Distribution.Simple.LocalBuildInfo (LocalBuildInfo,
+import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
+                                                     LocalBuildInfo (..),
+                                                     absoluteInstallDirs,
                                                      localPkgDescr)
 import           Distribution.Simple.Setup
 import           Distribution.Simple.Utils          (rawSystemExit)
@@ -10,6 +12,7 @@ import           System.Directory                   (getCurrentDirectory)
 main = defaultMainWithHooks simpleUserHooks
   {
     preConf = \a f -> makeLibsass a f >> preConf simpleUserHooks a f
+  , copyHook = copyLibsass
   , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
   , postClean = cleanLibsass
   }
@@ -35,6 +38,16 @@ updateExtraLibDirs localBuildInfo = do
             }
         }
     }
+
+copyLibsass :: PackageDescription -> LocalBuildInfo -> UserHooks -> CopyFlags
+            -> IO ()
+copyLibsass pkg_descr lbi _ flags = do
+    let libPref = libdir . absoluteInstallDirs pkg_descr lbi
+                . fromFlag . copyDest
+                $ flags
+    rawSystemExit (fromFlag $ copyVerbosity flags) "cp"
+        ["libsass/lib/libsass.a", libPref]
+
 
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
 cleanLibsass _ flags _ _ =
