@@ -8,7 +8,7 @@ category:            Foreign
 build-type:          Custom
 cabal-version:       >=1.10
 stability:           experimental
-synopsis:            Low-level bindings to libsass 3.2.0-beta.5-16
+synopsis:            Low-level bindings to libsass
 description:
   This package provides (very) low level bindings to libsass. It uses libsass
   compiled to static library, so if you use this in your project, you have to
@@ -16,6 +16,9 @@ description:
   with libstd++).
   For documentation visit <https://github.com/sass/libsass>.
 
+source-repository head
+  type:              git
+  location:          git://github.com/jakubfijalkowski/hlibsass.git
 
 extra-source-files:
   libsass/*.cpp
@@ -37,7 +40,7 @@ library
     , Binding.Libsass.Context
     , Binding.Libsass.Functions
     , Binding.Libsass.Values
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >= 4.7 && < 5
   hs-source-dirs:      .
   default-language:    Haskell2010
   default-extensions:  ForeignFunctionInterface
@@ -50,5 +53,5 @@ test-suite tests
   main-is:             Main.hs
   type:                exitcode-stdio-1.0
   ghc-options:         -Wall
-  build-depends:       base >= 4.7 && <4.8, hspec, hlibsass
+  build-depends:       base >= 4.7 && < 5, hspec, hlibsass
   default-language:    Haskell2010
