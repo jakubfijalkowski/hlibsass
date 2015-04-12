@@ -30,3 +30,7 @@ main = hspec $ do
   describe "Libsass" $ do
     it "should correctly compile simple expression" $ do
       simpleCompile sampleInput `shouldReturn` sampleOutput
+
+    it "should report correct version" $ do
+        str <- peekCString libsass_version
+        str `shouldBe` "3.2.0-beta.5-16-ge60a"

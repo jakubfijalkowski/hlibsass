@@ -1,5 +1,5 @@
 name:                hlibsass
-version:             0.1.1.0
+version:             0.1.1.1
 license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <fiolek94@gmail.com>
@@ -14,7 +14,7 @@ description:
   This package provides (very) low level bindings to libsass. It uses libsass
   compiled to static library, so if you use this in your project, you have to
   link your project with C++ runtime(which libsass does automatically - links
-  with libstd++).
+  with /libstdc++/).
   For documentation visit <https://github.com/sass/libsass>.
 
 extra-source-files:
@@ -28,6 +28,7 @@ extra-source-files:
   libsass/utf8/*.h
   libsass/Makefile
   libsass/LICENSE
+  CHANGELOG.md
 
 source-repository head
   type:              git
@@ -45,9 +46,8 @@ library
   hs-source-dirs:      .
   default-language:    Haskell2010
   default-extensions:  ForeignFunctionInterface
-  extra-libraries:     sass
   ghc-options:         -Wall
-  extra-libraries:     stdc++, sass
+  extra-libraries:     sass, stdc++
 
 test-suite tests
   hs-source-dirs:      tests
