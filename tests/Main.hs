@@ -26,11 +26,15 @@ sampleOutput :: String
 sampleOutput = "foo {\n  margin: 42px; }\n"
 
 main :: IO ()
-main = hspec $ do
+main = hspec $
   describe "Libsass" $ do
-    it "should correctly compile simple expression" $ do
-      simpleCompile sampleInput `shouldReturn` sampleOutput
+    it "should correctly compile simple expression" $
+        simpleCompile sampleInput `shouldReturn` sampleOutput
 
     it "should report correct version" $ do
         str <- peekCString libsass_version
-        str `shouldBe` "3.2.0-beta.5-16-ge60a"
+        str `shouldBe` "3.2.4-18-g3672"
+
+    it "should support quoted strings" $ withCString "sample" $ \cstr -> do
+        str <- sass_make_qstring cstr
+        sass_string_is_quoted str `shouldReturn` True

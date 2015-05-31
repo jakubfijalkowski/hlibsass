@@ -67,6 +67,15 @@ foreign import ccall unsafe "sass_values.h" sass_string_get_value
     :: Ptr SassValue
     -> IO CString
 
+foreign import ccall unsafe "sass_values.h" sass_string_is_quoted
+    :: Ptr SassValue
+    -> IO Bool
+
+foreign import ccall unsafe "sass_values.h" sass_string_set_quoted
+    :: Ptr SassValue
+    -> Bool
+    -> IO ()
+
 foreign import ccall unsafe "sass_values.h" sass_string_set_value
     :: Ptr SassValue
     -> CString
@@ -193,6 +202,10 @@ foreign import ccall unsafe "sass_values.h" sass_make_boolean
     -> IO (Ptr SassValue)
 
 foreign import ccall unsafe "sass_values.h" sass_make_string
+    :: CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass_values.h" sass_make_qstring
     :: CString
     -> IO (Ptr SassValue)
 
