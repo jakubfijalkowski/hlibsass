@@ -28,6 +28,7 @@ extra-source-files:
   libsass/utf8/*.h
   libsass/Makefile
   libsass/LICENSE
+  libsass/VERSION
   CHANGELOG.md
 
 source-repository head

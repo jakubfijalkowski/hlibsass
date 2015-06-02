@@ -6,7 +6,8 @@ import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
                                                      absoluteInstallDirs,
                                                      localPkgDescr)
 import           Distribution.Simple.Setup
-import           Distribution.Simple.Utils          (rawSystemExit)
+import           Distribution.Simple.Utils          (rawSystemExit,
+                                                     rawSystemStdout)
 import           System.Directory                   (getCurrentDirectory)
 
 main = defaultMainWithHooks simpleUserHooks
@@ -15,12 +16,13 @@ main = defaultMainWithHooks simpleUserHooks
   , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
   , postCopy = copyLibsass
   , postClean = cleanLibsass
+  , preSDist = \a f -> (updateLibsassVersion a f >> preSDist simpleUserHooks a f)
   }
 
 makeLibsass :: Args -> ConfigFlags -> IO ()
 makeLibsass _ flags =
-    rawSystemExit (fromFlag $ configVerbosity flags) "env"
-        ["make", "--directory=libsass"]
+    let verbosity = fromFlag $ configVerbosity flags
+    in rawSystemExit verbosity "env" ["make", "--directory=libsass"]
 
 updateExtraLibDirs :: LocalBuildInfo -> IO LocalBuildInfo
 updateExtraLibDirs localBuildInfo = do
@@ -53,3 +55,10 @@ cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
 cleanLibsass _ flags _ _ =
     rawSystemExit (fromFlag $ cleanVerbosity flags) "env"
         ["make", "--directory=libsass", "clean"]
+
+updateLibsassVersion :: Args -> SDistFlags -> IO ()
+updateLibsassVersion _ flags = do
+    let verbosity = fromFlag $ sDistVerbosity flags
+    ver <- rawSystemStdout verbosity "env" [ "git", "-C", "libsass", "describe",
+        "--abbrev=4", "--dirty", "--always", "--tags" ]
+    writeFile "libsass/VERSION" ver
