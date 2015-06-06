@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE CPP          #-}
 import           Bindings.Libsass
 import           Foreign
 import           Foreign.C
@@ -31,9 +32,11 @@ main = hspec $
     it "should correctly compile simple expression" $
         simpleCompile sampleInput `shouldReturn` sampleOutput
 
+#ifndef EXTERNAL_LIBSASS
     it "should report correct version" $ do
         str <- peekCString libsass_version
         str `shouldBe` "3.2.4-18-g3672"
+#endif
 
     it "should support quoted strings" $ withCString "sample" $ \cstr -> do
         str <- sass_make_qstring cstr

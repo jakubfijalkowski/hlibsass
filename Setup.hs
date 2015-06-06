@@ -1,4 +1,6 @@
-import           Data.Maybe                         (fromJust)
+import           Control.Monad                      (unless)
+import           Data.Char                          (toLower)
+import           Data.Maybe                         (fromJust, fromMaybe)
 import           Distribution.PackageDescription
 import           Distribution.Simple
 import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
@@ -6,7 +8,8 @@ import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
                                                      absoluteInstallDirs,
                                                      localPkgDescr)
 import           Distribution.Simple.Setup
-import           Distribution.Simple.Utils          (rawSystemExit,
+import           Distribution.Simple.Utils          (installExecutableFile,
+                                                     rawSystemExit,
                                                      rawSystemStdout)
 import           System.Directory                   (getCurrentDirectory)
 
@@ -20,35 +23,45 @@ main = defaultMainWithHooks simpleUserHooks
   }
 
 makeLibsass :: Args -> ConfigFlags -> IO ()
-makeLibsass _ flags =
-    let verbosity = fromFlag $ configVerbosity flags
-    in rawSystemExit verbosity "env" ["make", "--directory=libsass"]
+makeLibsass _ f =
+    let verbosity = fromFlag $ configVerbosity f
+        external = getCabalFlag "externalLibsass" f
+        target = if getCabalFlag "sharedLibsass" f then "shared" else "static"
+    in unless external $ rawSystemExit verbosity "env"
+         ["make", "--directory=libsass", target]
 
 updateExtraLibDirs :: LocalBuildInfo -> IO LocalBuildInfo
-updateExtraLibDirs localBuildInfo = do
-    let packageDescription = localPkgDescr localBuildInfo
-        lib = fromJust $ library packageDescription
-        libBuild = libBuildInfo lib
-    dir <- getCurrentDirectory
-    return localBuildInfo {
-        localPkgDescr = packageDescription {
-            library = Just $ lib {
-                libBuildInfo = libBuild {
-                    extraLibDirs = (dir ++ "/libsass/lib") :
-                        extraLibDirs libBuild
+updateExtraLibDirs lbi
+    | getCabalFlag "externalLibsass" $ configFlags lbi = return lbi
+    | otherwise = do
+        let packageDescription = localPkgDescr lbi
+            lib = fromJust $ library packageDescription
+            libBuild = libBuildInfo lib
+        dir <- getCurrentDirectory
+        return lbi {
+            localPkgDescr = packageDescription {
+                library = Just $ lib {
+                    libBuildInfo = libBuild {
+                        extraLibDirs = (dir ++ "/libsass/lib") :
+                            extraLibDirs libBuild
+                    }
                 }
             }
         }
-    }
 
 copyLibsass :: Args -> CopyFlags -> PackageDescription -> LocalBuildInfo -> IO ()
-copyLibsass _ flags pkg_descr lbi = do
+copyLibsass _ flags pkg_descr lbi =
     let libPref = libdir . absoluteInstallDirs pkg_descr lbi
                 . fromFlag . copyDest
                 $ flags
-    let verb = fromFlag $ copyVerbosity flags
-    rawSystemExit verb "mkdir" ["-p", libPref]
-    rawSystemExit verb "cp" ["libsass/lib/libsass.a", libPref]
+        verb = fromFlag $ copyVerbosity flags
+        config = configFlags lbi
+        external = getCabalFlag "externalLibsass" config
+        ext = if getCabalFlag "sharedLibsass" config then "so" else "a"
+    in unless external $
+        installExecutableFile verb
+            ("libsass/lib/libsass." ++ ext)
+            (libPref ++ "/libsass." ++ ext)
 
 
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
@@ -62,3 +75,8 @@ updateLibsassVersion _ flags = do
     ver <- rawSystemStdout verbosity "env" [ "git", "-C", "libsass", "describe",
         "--abbrev=4", "--dirty", "--always", "--tags" ]
     writeFile "libsass/VERSION" ver
+
+getCabalFlag :: String -> ConfigFlags -> Bool
+getCabalFlag name flags = fromMaybe False (lookup (FlagName name') allFlags)
+    where allFlags = configConfigurationsFlags flags
+          name' = map toLower name

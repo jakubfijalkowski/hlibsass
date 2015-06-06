@@ -35,6 +35,15 @@ source-repository head
   type:              git
   location:          git://github.com/jakubfijalkowski/hlibsass.git
 
+flag externalLibsass
+  description:       Use libsass that is installed in the system.
+  default:           False
+
+flag sharedLibsass
+  description:
+    Build libsass as a shared library (only if external_libsass = False).
+  default:           False
+
 library
   exposed-modules:
       Bindings.Libsass
@@ -48,12 +57,17 @@ library
   default-language:    Haskell2010
   default-extensions:  ForeignFunctionInterface
   ghc-options:         -Wall
-  extra-libraries:     sass, stdc++
+  if flag(externalLibsass)
+    extra-libraries:   sass
+  else
+    extra-libraries:   sass, stdc++
 
 test-suite tests
   hs-source-dirs:      tests
   main-is:             Main.hs
   type:                exitcode-stdio-1.0
   ghc-options:         -Wall
+  if flag(externalLibsass)
+    cpp-options:       -DEXTERNAL_LIBSASS
   build-depends:       base >= 4.7 && < 5, hspec, hlibsass
   default-language:    Haskell2010
