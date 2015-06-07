@@ -29,7 +29,7 @@ makeLibsass _ f =
         external = getCabalFlag "externalLibsass" f
         target = if getCabalFlag "sharedLibsass" f then "shared" else "static"
     in unless external $ rawSystemExit verbosity "env"
-         ["make", "--directory=libsass", target]
+         ["BUILD=" ++ target, "make", "--directory=libsass"]
 
 updateExtraLibDirs :: LocalBuildInfo -> IO LocalBuildInfo
 updateExtraLibDirs lbi
