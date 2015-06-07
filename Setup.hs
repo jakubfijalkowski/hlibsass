@@ -1,4 +1,4 @@
-import           Control.Monad                      (unless)
+import           Control.Monad                      (unless, when)
 import           Data.Char                          (toLower)
 import           Data.Maybe                         (fromJust, fromMaybe)
 import           Distribution.PackageDescription
@@ -11,6 +11,7 @@ import           Distribution.Simple.Setup
 import           Distribution.Simple.Utils          (installExecutableFile,
                                                      rawSystemExit,
                                                      rawSystemStdout)
+import           Distribution.System
 import           System.Directory                   (getCurrentDirectory)
 
 main = defaultMainWithHooks simpleUserHooks
@@ -57,11 +58,22 @@ copyLibsass _ flags pkg_descr lbi =
         verb = fromFlag $ copyVerbosity flags
         config = configFlags lbi
         external = getCabalFlag "externalLibsass" config
-        ext = if getCabalFlag "sharedLibsass" config then "so" else "a"
+        Platform _ os = hostPlatform lbi
+        shared = getCabalFlag "sharedLibsass" config
+        ext = if shared then "so" else "a"
     in unless external $
-        installExecutableFile verb
-            ("libsass/lib/libsass." ++ ext)
-            (libPref ++ "/libsass." ++ ext)
+        if os == Windows
+            then do
+                installExecutableFile verb
+                    "libsass/lib/libsass.a"
+                    (libPref ++ "/libsass.a")
+                when shared $ installExecutableFile verb
+                    "libsass/lib/libsass.dll"
+                    (libPref ++ "/libsass.dll")
+           else
+                installExecutableFile verb
+                    ("libsass/lib/libsass." ++ ext)
+                    (libPref ++ "/libsass." ++ ext)
 
 
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
