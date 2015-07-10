@@ -1,5 +1,8 @@
 hLibsass
 ========
+[![Build Status](https://travis-ci.org/jakubfijalkowski/hlibsass.svg?branch=master)](https://travis-ci.org/jakubfijalkowski/hlibsass)
+[![Hackage](https://img.shields.io/hackage/v/hlibsass.svg)](http://hackage.haskell.org/package/hlibsass)
+[![Hackage deps](https://img.shields.io/hackage-deps/v/hlibsass.svg)](http://packdeps.haskellers.com/reverse/hlibsass)
 
 hLibsass is a low-level binding to [LibSass](https://github.com/sass/libsass "LibSass"). It provides basic types used by the library along with a FFI interface to the C API.
 
