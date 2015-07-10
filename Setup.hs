@@ -10,18 +10,25 @@ import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
 import           Distribution.Simple.Setup
 import           Distribution.Simple.Utils          (installExecutableFile,
                                                      rawSystemExit,
-                                                     rawSystemStdout)
+                                                     rawSystemStdout,
+                                                     cabalVersion)
 import           Distribution.System
 import           System.Directory                   (getCurrentDirectory)
 
-main = defaultMainWithHooks simpleUserHooks
-  {
-    preConf = \a f -> makeLibsass a f >> preConf simpleUserHooks a f
-  , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
-  , postCopy = copyLibsass
-  , postClean = cleanLibsass
-  , preSDist = \a f -> (updateLibsassVersion a f >> preSDist simpleUserHooks a f)
-  }
+main = defaultMainWithHooks hooksFix
+    where
+        hooks = simpleUserHooks {
+            preConf = \a f -> makeLibsass a f >> preConf simpleUserHooks a f
+          , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
+          , postCopy = copyLibsass
+          , postClean = cleanLibsass
+          , preSDist = \a f -> (updateLibsassVersion a f >> preSDist simpleUserHooks a f)
+        }
+        -- Fix for Cabal-1.18 - it does not `copy` on `install`, so we `copy` on
+        -- `install` manually. ;)
+        hooksFix = if cabalVersion < Version [1, 20, 0] []
+                       then hooks { postInst = installLibsass }
+                       else hooks
 
 makeLibsass :: Args -> ConfigFlags -> IO ()
 makeLibsass _ f =
@@ -75,6 +82,28 @@ copyLibsass _ flags pkg_descr lbi =
                     ("libsass/lib/libsass." ++ ext)
                     (libPref ++ "/libsass." ++ ext)
 
+installLibsass :: Args -> InstallFlags -> PackageDescription -> LocalBuildInfo -> IO ()
+installLibsass _ flags pkg_descr lbi =
+    let libPref = libdir $ absoluteInstallDirs pkg_descr lbi NoCopyDest
+        verb = fromFlag $ installVerbosity flags
+        config = configFlags lbi
+        external = getCabalFlag "externalLibsass" config
+        Platform _ os = hostPlatform lbi
+        shared = getCabalFlag "sharedLibsass" config
+        ext = if shared then "so" else "a"
+    in unless external $
+        if os == Windows
+            then do
+                installExecutableFile verb
+                    "libsass/lib/libsass.a"
+                    (libPref ++ "/libsass.a")
+                when shared $ installExecutableFile verb
+                    "libsass/lib/libsass.dll"
+                    (libPref ++ "/libsass.dll")
+           else
+                installExecutableFile verb
+                    ("libsass/lib/libsass." ++ ext)
+                    (libPref ++ "/libsass." ++ ext)
 
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
 cleanLibsass _ flags _ _ =
