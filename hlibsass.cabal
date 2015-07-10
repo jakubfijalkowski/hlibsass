@@ -1,5 +1,5 @@
 name:                hlibsass
-version:             0.1.3.0
+version:             0.1.3.1
 license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <fiolek94@gmail.com>
@@ -9,12 +9,12 @@ category:            Foreign
 build-type:          Custom
 cabal-version:       >= 1.10
 stability:           experimental
-synopsis:            Low-level bindings to libsass
+synopsis:            Low-level bindings to Libsass
 description:
-  This package provides (very) low level bindings to libsass. It uses libsass
-  compiled to static library, so if you use this in your project, you have to
-  link your project with C++ runtime(which libsass does automatically - links
-  with /libstdc++/).
+  This package provides (very) low level bindings to LibSass. By default, it
+  uses LibSass compiled as a static library, so if you use this in your project,
+  you have to link your project with C++ runtime (which hLibsass does
+  automatically - links with /libstdc++/).
   For documentation visit <https://github.com/sass/libsass>.
 
 extra-source-files:
@@ -36,12 +36,12 @@ source-repository head
   location:          git://github.com/jakubfijalkowski/hlibsass.git
 
 flag externalLibsass
-  description:       Use libsass that is installed in the system.
+  description:       Use LibSass that is installed in the system.
   default:           False
 
 flag sharedLibsass
   description:
-    Build libsass as a shared library (only if external_libsass = False).
+    Build LibSass as a shared library (only if external_libsass = False).
   default:           False
 
 library

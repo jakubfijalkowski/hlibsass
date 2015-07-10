@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.3.1] - 2015-07-10
+### Fixed
+- Setup copies `libsass.a` even when Cabal-1.18 is used.
+
 ## [0.1.3.0] - 2015-06-08
 ### Added
 - Ability to link to existing version of libsass.
@@ -45,6 +49,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.3.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.3.0...v0.1.3.1
 [0.1.3.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.2.1...v0.1.3.0
 [0.1.2.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.2.0...v0.1.2.1
 [0.1.2.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.1.1...v0.1.2.0
