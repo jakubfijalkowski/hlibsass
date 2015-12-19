@@ -76,7 +76,7 @@ foreign import ccall unsafe "sass/functions.h" sass_import_get_list_entry
     -> CSize
     -> IO SassImportEntry
 
-foreign import ccall unsafe "sass/functions.h" sass_import_imp_path
+foreign import ccall unsafe "sass/functions.h" sass_import_get_imp_path
     :: SassImportEntry
     -> IO CString
 
