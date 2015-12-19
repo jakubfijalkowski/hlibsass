@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.5.0] - 2015-12-19
+### Added
+- Bindings to `sass_value_op`, `sass_import_get_imp_path` and
+  `sass_import_get_abs_path`
+
+### Changed
+- Uses Libsass 3.3.2
+- `sass_import_get_path` and `sass_import_get_base` have been removed from
+  Libsass
+
 ## [0.1.4.0] - 2015-07-10
 ### Fixed
 - Setup copies `libsass.a` even when Cabal-1.18 is used.
@@ -49,6 +59,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.5.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.4.0...v0.1.5.0
 [0.1.4.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.3.0...v0.1.4.0
 [0.1.3.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.2.1...v0.1.3.0
 [0.1.2.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.2.0...v0.1.2.1
