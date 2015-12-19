@@ -5,8 +5,7 @@ sudo: false
 
 env:
  - CABALVER=1.18 GHCVER=7.8.4
- - CABALVER=1.22.2 GHCVER=7.10.1
- - CABALVER=1.22.4 GHCVER=7.10.2
+ - CABALVER=1.22 GHCVER=7.10.2
  - CABALVER=head GHCVER=head
 
 addons:
