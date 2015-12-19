@@ -5,7 +5,6 @@ env:
   - STACK_YAML=stack-lts-2.yaml   UPDATE_NIGHTLY=NO
   - STACK_YAML=stack-nightly.yaml UPDATE_NIGHTLY=YES
   - STACK_YAML=stack.yaml         UPDATE_NIGHTLY=NO
-  - CABALVER=head GHCVER=head
 
 addons:
   apt:
@@ -31,5 +30,5 @@ install:
   - stack ghc -- --version
 
 script:
-  - stack --no-teminal test
-  - stack --no-teminal test --flag hlibsass:sharedlibsass
+  - stack --no-terminal test
+  - stack --no-terminal test --flag hlibsass:sharedlibsass
