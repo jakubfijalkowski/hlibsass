@@ -5,6 +5,7 @@ sudo: false
 
 env:
  - CABALVER=1.18 GHCVER=7.8.4
+ - CABALVER=1.22 GHCVER=7.10.1
  - CABALVER=1.22 GHCVER=7.10.2
  - CABALVER=head GHCVER=head
 
@@ -13,11 +14,12 @@ addons:
     sources:
      - hvr-ghc
     packages:
-     - cabal-install-1.22
-     - ghc-7.8.4
      - cabal-install-1.18
-     - ghc-7.10.1
+     - cabal-install-1.22
      - cabal-install-head
+     - ghc-7.8.4
+     - ghc-7.10.1
+     - ghc-7.10.2
      - ghc-head
 
 matrix:
