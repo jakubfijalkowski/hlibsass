@@ -31,4 +31,4 @@ install:
 
 script:
   - stack --no-terminal test
-  - stack --no-terminal test --flag hlibsass:sharedlibsass
+  - LD_LIBRARY_PATH="libsass/lib" stack --no-terminal test --flag hlibsass:sharedlibsass
