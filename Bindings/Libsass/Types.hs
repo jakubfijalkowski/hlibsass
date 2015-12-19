@@ -59,7 +59,7 @@ type SassImportList = Ptr (Ptr SassImport)
 type SassImporterEntry = Ptr SassImporter
 type SassImporterList = Ptr (Ptr SassImporter)
 
-type SassImporterFnType = 
+type SassImporterFnType =
      CString
   -> SassImporterEntry
   -> Ptr SassCompiler
@@ -125,3 +125,52 @@ instance Enum SassSeparator where
     toEnum 0 = SassSeparatorComma
     toEnum 1 = SassSeparatorSpace
     toEnum u = error ("SassSeparator.toEnum: Cannot match " ++ show u)
+
+-- ^ Operator used to combine two 'SassValue's.
+data SassOp = SassAnd
+            | SassOr
+            | SassEq
+            | SassNeq
+            | SassGt
+            | SassGte
+            | SassLt
+            | SassLte
+            | SassAdd
+            | SassSub
+            | SassMul
+            | SassDiv
+            | SassMod
+            | SassNumOps
+            deriving (Eq, Show)
+
+instance Enum SassOp where
+    fromEnum SassAnd    = 0
+    fromEnum SassOr     = 1
+    fromEnum SassEq     = 2
+    fromEnum SassNeq    = 3
+    fromEnum SassGt     = 4
+    fromEnum SassGte    = 5
+    fromEnum SassLt     = 6
+    fromEnum SassLte    = 7
+    fromEnum SassAdd    = 8
+    fromEnum SassSub    = 9
+    fromEnum SassMul    = 10
+    fromEnum SassDiv    = 11
+    fromEnum SassMod    = 12
+    fromEnum SassNumOps = 13
+
+    toEnum 0  = SassAnd
+    toEnum 1  = SassOr
+    toEnum 2  = SassEq
+    toEnum 3  = SassNeq
+    toEnum 4  = SassGt
+    toEnum 5  = SassGte
+    toEnum 6  = SassLt
+    toEnum 7  = SassLte
+    toEnum 8  = SassAdd
+    toEnum 9  = SassSub
+    toEnum 10 = SassMul
+    toEnum 11 = SassDiv
+    toEnum 12 = SassMod
+    toEnum 13 = SassNumOps
+    toEnum u  = error ("SassOps.toEnum: Cannot match " ++ show u)

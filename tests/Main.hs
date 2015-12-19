@@ -35,9 +35,19 @@ main = hspec $
 #ifndef EXTERNAL_LIBSASS
     it "should report correct version" $ do
         str <- peekCString libsass_version
-        str `shouldBe` "3.2.4-18-g3672"
+        str `shouldBe` "3.3.2"
 #endif
 
     it "should support quoted strings" $ withCString "sample" $ \cstr -> do
         str <- sass_make_qstring cstr
         sass_string_is_quoted str `shouldReturn` True
+
+    it "should correctly combine two SassValues" $ withCString "" $ \unit -> do
+        val1 <- sass_make_number 1.0 unit
+        val2 <- sass_make_number 2.0 unit
+        val3 <- sass_value_op (fromIntegral $ fromEnum SassAdd) val1 val2
+        result <- sass_number_get_value val3
+        sass_delete_value val1
+        sass_delete_value val2
+        sass_delete_value val3
+        result `shouldBe` 3.0

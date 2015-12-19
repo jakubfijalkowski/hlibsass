@@ -16,4 +16,4 @@ import           Bindings.Libsass.Wrappers  as Libsass
 import           Bindings.Libsass.Values    as Libsass
 import           Foreign.C.String
 
-foreign import ccall unsafe "sass.h" libsass_version :: CString
+foreign import ccall unsafe "sass/base.h" libsass_version :: CString
