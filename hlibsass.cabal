@@ -48,6 +48,9 @@ flag sharedLibsass
     Build LibSass as a shared library (only if external_libsass = False).
   default:           False
 
+custom-setup
+  setup-depends: base >= 4.7 && < 5, Cabal >= 1.18, directory >= 1.2.1
+
 library
   exposed-modules:
       Bindings.Libsass
