@@ -3,8 +3,7 @@ module Bindings.Libsass.Context where
 
 import           Bindings.Libsass.Types
 import           Foreign
-import           Foreign.C.String
-import           Foreign.C.Types
+import           Foreign.C
 
 foreign import ccall unsafe "sass/context.h" sass_make_options
     :: IO (Ptr SassOptions)
@@ -48,6 +47,10 @@ foreign import ccall safe "sass/context.h" sass_compiler_execute
 
 foreign import ccall unsafe "sass/context.h" sass_delete_compiler
     :: Ptr SassCompiler
+    -> IO ()
+
+foreign import ccall unsafe "sass/context.h" sass_delete_options
+    :: Ptr SassOptions
     -> IO ()
 
 foreign import ccall unsafe "sass/context.h" sass_delete_file_context
@@ -105,6 +108,10 @@ foreign import ccall unsafe "sass/context.h" sass_option_get_source_map_embed
     -> IO Bool
 
 foreign import ccall unsafe "sass/context.h" sass_option_get_source_map_contents
+    :: Ptr SassOptions
+    -> IO Bool
+
+foreign import ccall unsafe "sass/context.h" sass_option_get_source_map_file_urls
     :: Ptr SassOptions
     -> IO Bool
 
@@ -181,6 +188,11 @@ foreign import ccall unsafe "sass/context.h" sass_option_set_source_map_embed
     -> IO ()
 
 foreign import ccall unsafe "sass/context.h" sass_option_set_source_map_contents
+    :: Ptr SassOptions
+    -> Bool
+    -> IO ()
+
+foreign import ccall unsafe "sass/context.h" sass_option_set_source_map_file_urls
     :: Ptr SassOptions
     -> Bool
     -> IO ()
@@ -333,6 +345,10 @@ foreign import ccall unsafe "sass/context.h" sass_compiler_get_state
 foreign import ccall unsafe "sass/context.h" sass_compiler_get_context
     :: Ptr SassCompiler
     -> IO (Ptr SassContext)
+
+foreign import ccall unsafe "sass/context.h" sass_compiler_get_options
+    :: Ptr SassCompiler
+    -> IO (Ptr SassOptions)
 
 foreign import ccall unsafe "sass/context.h" sass_compiler_get_import_stack_size
     :: Ptr SassCompiler

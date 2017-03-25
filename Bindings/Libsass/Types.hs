@@ -2,15 +2,17 @@
 module Bindings.Libsass.Types where
 
 import           Foreign
-import           Foreign.C.String
+import           Foreign.C
 
--- From sass.h
+-- From sass/base.h
 
 -- | Defines output style of compiled CSS.
 data SassOutputStyle = SassStyleNested
                      | SassStyleExpanded
                      | SassStyleCompact
                      | SassStyleCompressed
+                     | SassStyleInspect -- ^ Marked as internal
+                     | SassStyleToSass -- ^ Marked as internal
                      deriving (Eq, Show)
 
 instance Enum SassOutputStyle where
@@ -18,14 +20,18 @@ instance Enum SassOutputStyle where
     fromEnum SassStyleExpanded   = 1
     fromEnum SassStyleCompact    = 2
     fromEnum SassStyleCompressed = 3
+    fromEnum SassStyleInspect    = 4
+    fromEnum SassStyleToSass     = 5
 
     toEnum 0 = SassStyleNested
     toEnum 1 = SassStyleExpanded
     toEnum 2 = SassStyleCompact
     toEnum 3 = SassStyleCompressed
+    toEnum 4 = SassStyleInspect
+    toEnum 5 = SassStyleToSass
     toEnum u = error ("SassOutputStyle.toEnum: Cannot match " ++ show u)
 
--- From sass_context.h
+-- From sass/context.h
 
 data SassCompiler
 data SassOptions
@@ -48,7 +54,7 @@ instance Enum SassCompilerState where
     toEnum 2 = SassCompilerExecuted
     toEnum u = error ("SassCompilerState.toEnum: Cannot match " ++ show u)
 
--- From sass_functions.h
+-- From sass/functions.h
 
 data SassImport
 data SassImporter
@@ -76,7 +82,7 @@ type SassFunctionFnType =
   -> IO (Ptr SassValue)
 type SassFunctionFn = FunPtr SassFunctionFnType
 
--- From sass_values.h
+-- From sass/values.h
 
 data SassValue
 
@@ -113,20 +119,23 @@ instance Enum SassTag where
     toEnum 8 = SassWarning
     toEnum u = error ("SassTag.toEnum: Cannot match " ++ show u)
 
--- ^ Separator used in Sass lists.
+-- | Separator used in Sass lists.
 data SassSeparator = SassSeparatorComma
                    | SassSeparatorSpace
+                   | SassSeparatorHash -- ^ Marked as internal
                    deriving (Eq, Show)
 
 instance Enum SassSeparator where
     fromEnum SassSeparatorComma = 0
-    fromEnum SassSeparatorSpace  = 1
+    fromEnum SassSeparatorSpace = 1
+    fromEnum SassSeparatorHash  = 2
 
     toEnum 0 = SassSeparatorComma
     toEnum 1 = SassSeparatorSpace
+    toEnum 2 = SassSeparatorHash
     toEnum u = error ("SassSeparator.toEnum: Cannot match " ++ show u)
 
--- ^ Operator used to combine two 'SassValue's.
+-- | Operator used to combine two 'SassValue's.
 data SassOp = SassAnd
             | SassOr
             | SassEq

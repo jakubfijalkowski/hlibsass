@@ -5,6 +5,70 @@ import           Bindings.Libsass.Types
 import           Foreign
 import           Foreign.C
 
+foreign import ccall unsafe "sass/values.h" sass_make_null
+    :: IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_boolean
+    :: Bool
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_string
+    :: CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_qstring
+    :: CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_number
+    :: CDouble
+    -> CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_color
+    :: CDouble
+    -> CDouble
+    -> CDouble
+    -> CDouble
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_list
+    :: CSize
+    -> CInt -- ^ 'SassSeparator'
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_map
+    :: CSize
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_error
+    :: CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_make_warning
+    :: CString
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_delete_value
+    :: Ptr SassValue
+    -> IO ()
+
+foreign import ccall unsafe "sass/values.h" sass_clone_value
+    :: Ptr SassValue
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_value_op
+    :: CInt -- ^ 'SassOp'
+    -> Ptr SassValue
+    -> Ptr SassValue
+    -> IO (Ptr SassValue)
+
+foreign import ccall unsafe "sass/values.h" sass_value_stringify
+    :: Ptr SassValue
+    -> Bool
+    -> CInt
+    -> IO (Ptr SassValue)
+
 foreign import ccall unsafe "sass/values.h" sass_value_get_tag
     :: Ptr SassValue
     -> IO CInt -- ^ Returns 'SassTag'
@@ -193,67 +257,3 @@ foreign import ccall unsafe "sass/values.h" sass_warning_set_message
     :: Ptr SassValue
     -> CString
     -> IO ()
-
-foreign import ccall unsafe "sass/values.h" sass_make_null
-    :: IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_boolean
-    :: Bool
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_string
-    :: CString
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_qstring
-    :: CString
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_number
-    :: CDouble
-    -> CString
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_color
-    :: CDouble
-    -> CDouble
-    -> CDouble
-    -> CDouble
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_list
-    :: CSize
-    -> CInt -- ^ 'SassSeparator'
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_map
-    :: CSize
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_error
-    :: CString
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_make_warning
-    :: CString
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_delete_value
-    :: Ptr SassValue
-    -> IO ()
-
-foreign import ccall unsafe "sass/values.h" sass_clone_value
-    :: Ptr SassValue
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_value_stringify
-    :: Ptr SassValue
-    -> Bool
-    -> CInt
-    -> IO (Ptr SassValue)
-
-foreign import ccall unsafe "sass/values.h" sass_value_op
-    :: CInt -- ^ 'SassOp'
-    -> Ptr SassValue
-    -> Ptr SassValue
-    -> IO (Ptr SassValue)
