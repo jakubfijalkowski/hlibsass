@@ -6,6 +6,8 @@ hLibsass
 
 hLibsass is a low-level binding to [LibSass](https://github.com/sass/libsass "LibSass"). It provides basic types used by the library along with a FFI interface to the C API.
 
+This is really low-level library, if you want high-level, more Haskell-friendly library, check out [hSass](https://github.com/jakubfijalkowski/hsass).
+
 It is available on [Hackage](http://hackage.haskell.org/package/hlibsass).
 
 [hLibsass' Changelog](CHANGELOG.md)
