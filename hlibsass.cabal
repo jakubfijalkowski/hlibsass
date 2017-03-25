@@ -26,6 +26,8 @@ extra-source-files:
   libsass/src/b64/*.h
   libsass/src/utf8/*.h
   libsass/src/support/*.pc.in
+  libsass/src/memory/*.hpp
+  libsass/src/memory/*.cpp
   libsass/include/*.h
   libsass/include/sass/*.h
   libsass/include/sass/*.h.in
@@ -64,10 +66,12 @@ library
   default-language:    Haskell2010
   default-extensions:  ForeignFunctionInterface
   ghc-options:         -Wall
-  if flag(externalLibsass)
-    extra-libraries:   sass
-  else
-    extra-libraries:   sass, stdc++
+  extra-libraries:     sass
+  if !flag(externalLibsass) && !flag(sharedLibsass)
+    if os(darwin)
+      extra-libraries: c++
+    else
+      extra-libraries: stdc++
 
 test-suite tests
   hs-source-dirs:      tests
