@@ -1,5 +1,5 @@
 name:                hlibsass
-version:             0.1.5.2
+version:             0.1.6.0
 license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <fiolek94@gmail.com>
@@ -56,6 +56,7 @@ custom-setup
 library
   exposed-modules:
       Bindings.Libsass
+    , Bindings.Libsass.Base
     , Bindings.Libsass.Types
     , Bindings.Libsass.Wrappers
     , Bindings.Libsass.Context

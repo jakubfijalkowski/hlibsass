@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.6.0] - 2017-03-25
+### Fixed
+- `tools/libpath.sh` recognizes `stack`
+
+### Changed
+- Update to Libsass 3.4.3
+
 ## [0.1.5.2] - 2017-03-19
 ### Fixed
 - Build process for dependant libraries works with Cabal 1.24 & Stack 1.4
@@ -63,6 +70,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.6.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.5.2...v0.1.6.0
 [0.1.5.2]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.5.0...v0.1.5.2
 [0.1.5.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.4.0...v0.1.5.0
 [0.1.4.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.3.0...v0.1.4.0
