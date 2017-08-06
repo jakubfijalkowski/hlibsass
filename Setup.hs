@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 import           Control.Monad                      (unless, when)
 import           Data.Char                          (toLower)
 import           Data.Maybe                         (fromJust, fromMaybe)
@@ -8,18 +9,30 @@ import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
                                                      absoluteInstallDirs,
                                                      localPkgDescr)
 import           Distribution.Simple.Setup
-import           Distribution.Simple.Utils          (installExecutableFile,
+import           Distribution.Simple.Utils          (cabalVersion,
+                                                     installExecutableFile,
                                                      rawSystemExit,
-                                                     rawSystemStdout,
-                                                     cabalVersion)
+                                                     rawSystemStdout)
 import           Distribution.System
 import           System.Directory                   (getCurrentDirectory)
+
+#ifdef MIN_VERSION_Cabal
+#if MIN_VERSION_Cabal(2, 0, 0)
+import           Distribution.Version               (mkVersion)
+#else
+mkVersion :: [Int] -> Version
+mkVersion = flip Version []
+
+mkFlagName :: String -> FlagName
+mkFlagName = FlagName
+#endif
+#endif
 
 main = defaultMainWithHooks hooksFix
     where
         hooks = simpleUserHooks {
             preConf = makeLibsass
-          , confHook = (\a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs)
+          , confHook = \a f -> confHook simpleUserHooks a f >>= updateExtraLibDirs
           , postConf = disablePostConfHooks
           , preBuild = updateLibDirs
           , postCopy = copyLibsass
@@ -28,7 +41,7 @@ main = defaultMainWithHooks hooksFix
         }
         -- Fix for Cabal-1.18 - it does not `copy` on `install`, so we `copy` on
         -- `install` manually. ;)
-        hooksFix = if cabalVersion < Version [1, 20, 0] []
+        hooksFix = if cabalVersion < mkVersion [1, 20, 0]
                        then hooks { postInst = installLibsass }
                        else hooks
 
@@ -120,6 +133,6 @@ updateLibsassVersion _ flags = do
     return emptyHookedBuildInfo
 
 getCabalFlag :: String -> ConfigFlags -> Bool
-getCabalFlag name flags = fromMaybe False (lookup (FlagName name') allFlags)
+getCabalFlag name flags = fromMaybe False (lookup (mkFlagName name') allFlags)
     where allFlags = configConfigurationsFlags flags
           name' = map toLower name
