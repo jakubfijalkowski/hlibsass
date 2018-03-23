@@ -16,7 +16,6 @@ import           Distribution.Simple.Utils          (cabalVersion,
 import           Distribution.System
 import           System.Directory                   (getCurrentDirectory)
 
-#ifdef MIN_VERSION_Cabal
 #if MIN_VERSION_Cabal(2, 0, 0)
 import           Distribution.Version               (mkVersion)
 #else
@@ -25,7 +24,6 @@ mkVersion = flip Version []
 
 mkFlagName :: String -> FlagName
 mkFlagName = FlagName
-#endif
 #endif
 
 main = defaultMainWithHooks hooksFix
@@ -132,7 +130,14 @@ updateLibsassVersion _ flags = do
     writeFile "libsass/VERSION" ver
     return emptyHookedBuildInfo
 
+#if MIN_VERSION_Cabal(2, 2, 0)
+getCabalFlag :: String -> ConfigFlags -> Bool
+getCabalFlag name flags = fromMaybe False (lookupFlagAssignment (mkFlagName name') allFlags)
+    where allFlags = configConfigurationsFlags flags
+          name' = map toLower name
+#else
 getCabalFlag :: String -> ConfigFlags -> Bool
 getCabalFlag name flags = fromMaybe False (lookup (mkFlagName name') allFlags)
     where allFlags = configConfigurationsFlags flags
           name' = map toLower name
+#endif
