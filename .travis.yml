@@ -30,7 +30,7 @@ before_install:
   - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 
 install:
-  - ./update_nightly.sh
+  - ./tools/update_nightly.sh
   - stack setup --no-terminal
   - stack ghc -- --version
 
