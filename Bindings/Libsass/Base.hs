@@ -25,11 +25,6 @@ foreign import ccall unsafe "sass/base.h" sass_string_unquote
     :: CString
     -> IO CString
 
-foreign import ccall unsafe "sass/base.h" sass_resolve_file
-    :: CString
-    -> Ptr CString
-    -> IO CString
-
 foreign import ccall unsafe "sass/base.h" libsass_version
     :: CString
 

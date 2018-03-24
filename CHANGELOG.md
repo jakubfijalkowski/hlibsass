@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.7.0] - 2018-03-24
+### Changed
+- Update to Libsass 3.5.2
+
 ## [0.1.6.1] - 2017-08-06
 ### Fixed
 - Build process (`Stack.hs`) works with Cabal 1.X and Cabal 2.X
@@ -74,6 +78,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.7.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.6.1...v0.1.7.0
 [0.1.6.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.6.0...v0.1.6.1
 [0.1.6.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.5.2...v0.1.6.0
 [0.1.5.2]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.5.0...v0.1.5.2

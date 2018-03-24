@@ -35,7 +35,7 @@ main = hspec $
 #ifndef EXTERNAL_LIBSASS
     it "should report correct version" $ do
         str <- peekCString libsass_version
-        str `shouldBe` "3.4.3"
+        str `shouldBe` "3.5.2"
 #endif
 
     it "should support quoted strings" $ withCString "sample" $ \cstr -> do

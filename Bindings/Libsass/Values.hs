@@ -35,6 +35,7 @@ foreign import ccall unsafe "sass/values.h" sass_make_color
 foreign import ccall unsafe "sass/values.h" sass_make_list
     :: CSize
     -> CInt -- ^ 'SassSeparator'
+    -> Bool
     -> IO (Ptr SassValue)
 
 foreign import ccall unsafe "sass/values.h" sass_make_map
@@ -201,6 +202,15 @@ foreign import ccall unsafe "sass/values.h" sass_list_get_separator
 foreign import ccall unsafe "sass/values.h" sass_list_set_separator
     :: Ptr SassValue
     -> CInt -- ^ 'SassSeparator'
+    -> IO ()
+
+foreign import ccall unsafe "sass/values.h" sass_list_get_is_bracketed
+    :: Ptr SassValue
+    -> IO Bool
+
+foreign import ccall unsafe "sass/values.h" sass_list_set_is_bracketed
+    :: Ptr SassValue
+    -> Bool
     -> IO ()
 
 foreign import ccall unsafe "sass/values.h" sass_list_get_value

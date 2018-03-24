@@ -139,14 +139,6 @@ foreign import ccall unsafe "sass/context.h" sass_option_get_output_path
     :: Ptr SassOptions
     -> IO CString
 
-foreign import ccall unsafe "sass/context.h" sass_option_get_plugin_path
-    :: Ptr SassOptions
-    -> IO CString
-
-foreign import ccall unsafe "sass/context.h" sass_option_get_include_path
-    :: Ptr SassOptions
-    -> IO CString
-
 foreign import ccall unsafe "sass/context.h" sass_option_get_source_map_file
     :: Ptr SassOptions
     -> IO CString
@@ -306,6 +298,15 @@ foreign import ccall unsafe "sass/context.h" sass_context_get_included_files
     :: Ptr SassContext
     -> IO (Ptr CString)
 
+foreign import ccall unsafe "sass/context.h" sass_option_get_include_path_size
+    :: Ptr SassOptions
+    -> IO CSize
+
+foreign import ccall unsafe "sass/context.h" sass_option_get_include_path
+    :: Ptr SassOptions
+    -> CSize
+    -> IO CString
+
 foreign import ccall unsafe "sass/context.h" sass_context_get_included_files_size
     :: Ptr SassContext
     -> IO CSize
@@ -363,6 +364,19 @@ foreign import ccall unsafe "sass/context.h" sass_compiler_get_import_entry
     -> CSize
     -> IO SassImportEntry
 
+foreign import ccall unsafe "sass/context.h" sass_compiler_get_callee_stack_size
+    :: Ptr SassCompiler
+    -> IO CSize
+
+foreign import ccall unsafe "sass/context.h" sass_compiler_get_last_callee
+    :: Ptr SassCompiler
+    -> IO SassCalleeEntry
+
+foreign import ccall unsafe "sass/context.h" sass_compiler_get_callee_entry
+    :: Ptr SassCompiler
+    -> CSize
+    -> IO SassCalleeEntry
+
 foreign import ccall unsafe "sass/context.h" sass_option_push_plugin_path
     :: Ptr SassOptions
     -> CString
@@ -372,3 +386,24 @@ foreign import ccall unsafe "sass/context.h" sass_option_push_include_path
     :: Ptr SassOptions
     -> CString
     -> IO ()
+
+foreign import ccall unsafe "sass/context.h" sass_find_file
+    :: CString
+    -> Ptr SassOptions
+    -> IO CString
+
+foreign import ccall unsafe "sass/context.h" sass_find_include
+    :: CString
+    -> Ptr SassOptions
+    -> IO CString
+
+foreign import ccall unsafe "sass/context.h" sass_compiler_find_file
+    :: CString
+    -> Ptr SassCompiler
+    -> IO CString
+
+foreign import ccall unsafe "sass/context.h" sass_compiler_find_include
+    :: CString
+    -> Ptr SassCompiler
+    -> IO CString
+    

@@ -33,8 +33,6 @@ instance Enum SassOutputStyle where
 
 -- From sass/context.h
 
-data SassCompiler
-data SassOptions
 data SassContext
 data SassFileContext
 data SassDataContext
@@ -56,10 +54,16 @@ instance Enum SassCompilerState where
 
 -- From sass/functions.h
 
+data SassEnv
+data SassCallee
 data SassImport
+data SassOptions
+data SassCompiler
 data SassImporter
 data SassFunction
 
+type SassEnvFrame = Ptr SassEnv
+type SassCalleeEntry = Ptr SassCallee
 type SassImportEntry = Ptr SassImport
 type SassImportList = Ptr (Ptr SassImport)
 type SassImporterEntry = Ptr SassImporter
@@ -81,6 +85,21 @@ type SassFunctionFnType =
   -> Ptr SassOptions
   -> IO (Ptr SassValue)
 type SassFunctionFn = FunPtr SassFunctionFnType
+
+data SassCalleeType = SassCalleeMixin
+                    | SassCalleeFunction
+                    | SassCalleeCFunction
+                    deriving (Eq, Show)
+
+instance Enum SassCalleeType where
+    fromEnum SassCalleeMixin = 0
+    fromEnum SassCalleeFunction = 1
+    fromEnum SassCalleeCFunction = 2
+
+    toEnum 0 = SassCalleeMixin
+    toEnum 1 = SassCalleeFunction
+    toEnum 2 = SassCalleeCFunction
+    toEnum u = error ("SassCalleeType.toEnum: Cannot match " ++ show u)
 
 -- From sass/values.h
 
