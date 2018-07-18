@@ -12,7 +12,6 @@ import           Distribution.Simple.Program.Find   (findProgramOnSearchPath,
                                                      defaultProgramSearchPath)
 import           Distribution.Simple.Setup
 import           Distribution.Simple.Utils          (cabalVersion,
-                                                     doesExecutableExist,
                                                      installExecutableFile,
                                                      rawSystemExit,
                                                      rawSystemStdout)
@@ -62,11 +61,9 @@ execMake verbosity build_target target = do
 
 makeLibsass :: Args -> ConfigFlags -> IO HookedBuildInfo
 makeLibsass _ f = do
-    doesMakeExist <- doesExecutableExist "make"
     let verbosity = fromFlag $ configVerbosity f
         external = getCabalFlag "externalLibsass" f
         target = if getCabalFlag "sharedLibsass" f then "shared" else "static"
-        makeExec = if doesMakeExist then "make" else "gmake"
     unless external $ execMake verbosity target ""
     return emptyHookedBuildInfo
 
