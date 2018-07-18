@@ -49,7 +49,11 @@ execMake :: Verbosity.Verbosity -> String -> String -> IO ()
 execMake verbosity build_target target = do
     gmakePath <- findProgramOnSearchPath Verbosity.silent defaultProgramSearchPath "gmake"
     let makeExec = case gmakePath of 
+#if MIN_VERSION_Cabal(1, 24, 0)
                      Just (p, _) -> p
+#else
+                     Just p -> p
+#endif
                      Nothing -> "make"
         baseArgs = if null build_target
                       then [makeExec, "--directory=libsass"]
