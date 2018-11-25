@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [0.1.8.0] - 2018-11-25
 ### Changed
 - Update to Libsass 3.5.5
+- Use `gmake` instead of `make` if available
 
 ## [0.1.7.0] - 2018-03-24
 ### Changed
