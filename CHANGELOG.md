@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.8.1] - 2020-02-21
+### Changed
+- Support Cabal 3
+
 ## [0.1.8.0] - 2018-11-25
 ### Changed
 - Update to Libsass 3.5.5

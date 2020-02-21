@@ -1,9 +1,9 @@
 name:                hlibsass
-version:             0.1.8.0
+version:             0.1.8.1
 license:             MIT
 license-file:        LICENSE
-author:              Jakub Fijałkowski <fiolek94@gmail.com>
-maintainer:          fiolek94@gmail.com
+author:              Jakub Fijałkowski <kuba@codinginfinity.me>
+maintainer:          kuba@codinginfinity.me
 homepage:            https://github.com/jakubfijalkowski/hlibsass
 category:            Foreign
 build-type:          Custom
