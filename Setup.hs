@@ -8,8 +8,8 @@ import           Distribution.Simple.LocalBuildInfo (InstallDirs (..),
                                                      LocalBuildInfo (..),
                                                      absoluteInstallDirs,
                                                      localPkgDescr)
-import           Distribution.Simple.Program.Find   (findProgramOnSearchPath,
-                                                     defaultProgramSearchPath)
+import           Distribution.Simple.Program.Find   (defaultProgramSearchPath,
+                                                     findProgramOnSearchPath)
 import           Distribution.Simple.Setup
 import           Distribution.Simple.Utils          (cabalVersion,
                                                      installExecutableFile,
@@ -17,7 +17,8 @@ import           Distribution.Simple.Utils          (cabalVersion,
                                                      rawSystemStdout)
 import           Distribution.System
 import qualified Distribution.Verbosity             as Verbosity
-import           System.Directory                   (getCurrentDirectory)
+import           System.Directory                   (doesFileExist,
+                                                     getCurrentDirectory)
 
 #if MIN_VERSION_Cabal(2, 0, 0)
 import           Distribution.Version               (mkVersion)
@@ -44,16 +45,17 @@ main = defaultMainWithHooks hooksFix
         hooksFix = if cabalVersion < mkVersion [1, 20, 0]
                        then hooks { postInst = installLibsass }
                        else hooks
+
 execMake :: Verbosity.Verbosity -> String -> String -> IO ()
 execMake verbosity build_target target = do
     gmakePath <- findProgramOnSearchPath Verbosity.silent defaultProgramSearchPath "gmake"
-    let makeExec = case gmakePath of 
+    let makeExec = case gmakePath of
 #if MIN_VERSION_Cabal(1, 24, 0)
                      Just (p, _) -> p
 #else
-                     Just p -> p
+                     Just p      -> p
 #endif
-                     Nothing -> "make"
+                     Nothing     -> "make"
         baseArgs = if null build_target
                       then [makeExec, "--directory=libsass"]
                       else ["BUILD=" ++ build_target, makeExec, "--directory=libsass"]
@@ -62,11 +64,22 @@ execMake verbosity build_target target = do
                       else baseArgs ++ [target]
     rawSystemExit verbosity "env" makeArgs
 
+updateLibsassVersion :: ConfigFlags -> IO ()
+updateLibsassVersion flags = do
+    let verbosity = fromFlag $ configVerbosity flags
+    exists <- doesFileExist "libsass/VERSION"
+    unless exists $ do
+        ver <- rawSystemStdout verbosity "env" [ "git", "-C", "libsass", "describe",
+            "--abbrev=4", "--dirty", "--always", "--tags" ]
+        writeFile "libsass/VERSION" ver
+
+
 makeLibsass :: Args -> ConfigFlags -> IO HookedBuildInfo
 makeLibsass _ f = do
     let verbosity = fromFlag $ configVerbosity f
         external = getCabalFlag "externalLibsass" f
         target = if getCabalFlag "sharedLibsass" f then "shared" else "static"
+    unless external $ updateLibsassVersion f
     unless external $ execMake verbosity target ""
     return emptyHookedBuildInfo
 
