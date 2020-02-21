@@ -1,5 +1,4 @@
-resolver: lts-2.22
-compiler: ghc-7.8.4
+resolver: lts-13.11
 packages:
 - '.'
 extra-deps: []
