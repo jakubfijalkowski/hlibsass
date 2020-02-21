@@ -38,7 +38,6 @@ main = defaultMainWithHooks hooksFix
           , preBuild = updateLibDirs
           , postCopy = copyLibsass
           , postClean = cleanLibsass
-          , preSDist = updateLibsassVersion
         }
         -- Fix for Cabal-1.18 - it does not `copy` on `install`, so we `copy` on
         -- `install` manually. ;)
@@ -139,14 +138,6 @@ installLibsass _ flags pkg_descr lbi =
 cleanLibsass :: Args -> CleanFlags -> PackageDescription -> () -> IO ()
 cleanLibsass _ flags _ _ =
     execMake (fromFlag $ cleanVerbosity flags) "" "clean"
-
-updateLibsassVersion :: Args -> SDistFlags -> IO HookedBuildInfo
-updateLibsassVersion _ flags = do
-    let verbosity = fromFlag $ sDistVerbosity flags
-    ver <- rawSystemStdout verbosity "env" [ "git", "-C", "libsass", "describe",
-        "--abbrev=4", "--dirty", "--always", "--tags" ]
-    writeFile "libsass/VERSION" ver
-    return emptyHookedBuildInfo
 
 #if MIN_VERSION_Cabal(2, 2, 0)
 getCabalFlag :: String -> ConfigFlags -> Bool
