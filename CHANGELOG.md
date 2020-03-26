@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.9.0] - 2020-03-26
+### Changed
+- Update to LibSass 3.6.3
+
 ## [0.1.8.1] - 2020-02-21
 ### Changed
 - Support Cabal 3
@@ -87,6 +91,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.9.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.1...v0.1.9.0
 [0.1.8.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.0...v0.1.8.1
 [0.1.8.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.7.0...v0.1.8.0
 [0.1.7.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.6.1...v0.1.7.0
