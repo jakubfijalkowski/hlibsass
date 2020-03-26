@@ -13,6 +13,7 @@ data SassOutputStyle = SassStyleNested
                      | SassStyleCompressed
                      | SassStyleInspect -- ^ Marked as internal
                      | SassStyleToSass -- ^ Marked as internal
+                     | SassStyleToCss -- ^ Marked as internal
                      deriving (Eq, Show)
 
 instance Enum SassOutputStyle where
@@ -22,6 +23,7 @@ instance Enum SassOutputStyle where
     fromEnum SassStyleCompressed = 3
     fromEnum SassStyleInspect    = 4
     fromEnum SassStyleToSass     = 5
+    fromEnum SassStyleToCss      = 6
 
     toEnum 0 = SassStyleNested
     toEnum 1 = SassStyleExpanded
@@ -29,6 +31,7 @@ instance Enum SassOutputStyle where
     toEnum 3 = SassStyleCompressed
     toEnum 4 = SassStyleInspect
     toEnum 5 = SassStyleToSass
+    toEnum 6 = SassStyleToCss
     toEnum u = error ("SassOutputStyle.toEnum: Cannot match " ++ show u)
 
 -- From sass/context.h

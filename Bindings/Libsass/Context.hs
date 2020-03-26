@@ -327,6 +327,10 @@ foreign import ccall unsafe "sass/context.h" sass_context_take_error_file
     :: Ptr SassContext
     -> IO CString
 
+foreign import ccall unsafe "sass/context.h" sass_context_take_error_src
+    :: Ptr SassContext
+    -> IO CString
+
 foreign import ccall unsafe "sass/context.h" sass_context_take_output_string
     :: Ptr SassContext
     -> IO CString
