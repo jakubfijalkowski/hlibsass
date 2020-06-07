@@ -1,0 +1,36 @@
+image: Visual Studio 2015
+build: off
+environment:
+  global:
+    STACK_ROOT: "c:\\sr"
+    TMP: "c:\\tmp"
+  matrix:
+  - STACK_YAML: stack.yaml
+  - STACK_YAML: stack-lts-15.3.yaml
+  - STACK_YAML: stack-lts-14.yaml
+  - STACK_YAML: stack-lts-13.19.yaml
+  - STACK_YAML: stack-lts-13.11.yaml
+  - STACK_YAML: stack-lts-12.26.yaml
+  - STACK_YAML: stack-lts-12.14.yaml
+  - STACK_YAML: stack-lts-11.yaml
+  - STACK_YAML: stack-lts-9.yaml
+  - STACK_YAML: stack-nightly.yaml
+
+cache:
+  - C:\Users\appveyor\AppData\Local\Programs\stack\x86_64-windows
+
+install:
+  - set PATH=C:\stack;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;%PATH%
+  - set CC=gcc
+  - ps: md C:/stack -ea 0
+  - curl -sS -ostack.zip -L --insecure https://get.haskellstack.org/stable/windows-x86_64.zip
+  - 7z x -oC:/stack stack.zip stack.exe
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git submodule update --init --recursive
+
+build_script:
+  - stack setup > nul
+  - stack build
+
+test_script:
+  - echo "" | stack --no-terminal test

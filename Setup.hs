@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 import           Control.Monad                      (unless, when)
+import           Control.Applicative                ((<|>))
 import           Data.Char                          (toLower)
 import           Data.Maybe                         (fromJust, fromMaybe)
 import           Distribution.PackageDescription
@@ -49,7 +50,9 @@ main = defaultMainWithHooks hooksFix
 execMake :: Verbosity.Verbosity -> String -> String -> IO ()
 execMake verbosity build_target target = do
     gmakePath <- findProgramOnSearchPath Verbosity.silent defaultProgramSearchPath "gmake"
-    let makeExec = case gmakePath of
+    makePath <- findProgramOnSearchPath Verbosity.silent defaultProgramSearchPath "make"
+    mingwMakePath <- findProgramOnSearchPath Verbosity.silent defaultProgramSearchPath "mingw32-make"
+    let makeExec = case (gmakePath <|> makePath <|> mingwMakePath) of
 #if MIN_VERSION_Cabal(1, 24, 0)
                      Just (p, _) -> p
 #else

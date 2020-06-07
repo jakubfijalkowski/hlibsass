@@ -1,6 +1,7 @@
 hLibsass
 ========
-[![Build Status](https://travis-ci.org/jakubfijalkowski/hlibsass.svg?branch=master)](https://travis-ci.org/jakubfijalkowski/hlibsass)
+[![Linux Build Status](https://img.shields.io/travis/jakubfijalkowski/hlibsass?logo=travis)](https://travis-ci.org/jakubfijalkowski/hlibsass)
+[![Windows Build Status](https://img.shields.io/appveyor/build/jakubfijalkowski/hlibsass?logo=appveyor)](https://ci.appveyor.com/project/jakubfijalkowski/hlibsass)
 [![Hackage](https://img.shields.io/hackage/v/hlibsass.svg)](http://hackage.haskell.org/package/hlibsass)
 [![Hackage deps](https://img.shields.io/hackage-deps/v/hlibsass.svg)](http://packdeps.haskellers.com/reverse/hlibsass)
 
