@@ -56,21 +56,19 @@ execMake verbosity build_target target = do
                      Just p      -> p
 #endif
                      Nothing     -> "make"
-        baseArgs = if null build_target
-                      then [makeExec, "--directory=libsass"]
-                      else ["BUILD=" ++ build_target, makeExec, "--directory=libsass"]
-        makeArgs = if null target
+        baseArgs = ["--directory=libsass", if null target then "all" else target]
+        makeArgs = if null build_target
                       then baseArgs
-                      else baseArgs ++ [target]
-    rawSystemExit verbosity "env" makeArgs
+                      else baseArgs ++ ["BUILD=" ++ build_target]
+    rawSystemExit verbosity makeExec makeArgs
 
 updateLibsassVersion :: ConfigFlags -> IO ()
 updateLibsassVersion flags = do
     let verbosity = fromFlag $ configVerbosity flags
     exists <- doesFileExist "libsass/VERSION"
     unless exists $ do
-        ver <- rawSystemStdout verbosity "env" [ "git", "-C", "libsass", "describe",
-            "--abbrev=4", "--dirty", "--always", "--tags" ]
+        ver <- rawSystemStdout verbosity "git" ["-C", "libsass", "describe",
+            "--abbrev=4", "--dirty", "--always", "--tags"]
         writeFile "libsass/VERSION" ver
 
 
