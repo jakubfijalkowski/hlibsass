@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.10.0] - 2020-03-26
+### 
+- Update to LibSass 3.6.4
+- Simplify build on Windows
+
 ## [0.1.9.0] - 2020-03-26
 ### Changed
 - Update to LibSass 3.6.3

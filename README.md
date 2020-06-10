@@ -13,6 +13,10 @@ It is available on [Hackage](http://hackage.haskell.org/package/hlibsass).
 
 [hLibsass' Changelog](CHANGELOG.md)
 
+### A note from maintainer
+
+Although it might seem like this package is dead - it is not. I am maintaining it (willing to maintain), it's just that I don't use it anymore and can't really detect bugs proactively. This also applies to LibSass updates - I am not monitoring it. If you want a bug fixed or LibSass version bumped, just open an issue and I will try to solve it! :)
+
 ### Documentation
 
 This library is (mostly) 1-1 binding to LibSass. See [LibSass wiki](https://github.com/sass/libsass/wiki "LibSass wiki") for documentation.
