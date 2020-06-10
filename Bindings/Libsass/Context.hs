@@ -307,6 +307,15 @@ foreign import ccall unsafe "sass/context.h" sass_option_get_include_path
     -> CSize
     -> IO CString
 
+foreign import ccall unsafe "sass/context.h" sass_option_get_plugin_path_size
+    :: Ptr SassOptions
+    -> IO CSize
+
+foreign import ccall unsafe "sass/context.h" sass_option_get_plugin_path
+    :: Ptr SassOptions
+    -> CSize
+    -> IO CString
+
 foreign import ccall unsafe "sass/context.h" sass_context_get_included_files_size
     :: Ptr SassContext
     -> IO CSize

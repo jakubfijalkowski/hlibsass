@@ -42,6 +42,7 @@ hLibsass uses LibSass internally and therefore is quite tightly bound to LibSass
 - hLibsass 0.1.7.x with LibSass 3.5.2 (distributed with)
 - hLibsass 0.1.8.x with LibSass 3.5.5 (distributed with),
 - hLibsass 0.1.9.x with LibSass 3.6.3 (distributed with),
+- hLibsass 0.1.10.x with LibSass 3.6.3 & 3.6.4 (distributed with),
 - LibSass 3.5.x **WILL** have breaking changes and will result in runtime failures of hLibSass versions prior to 0.1.7.0 (and probably compile-time failures too), see [LibSass releases page](https://github.com/sass/libsass/releases) for more details.
 
 ### Things to consider
@@ -56,4 +57,4 @@ GHC 7 is unable to load static version of native libraries (at least some of the
 
 ### Copyright
 
-Copyright (c) 2015-2018 Jakub Fijałkowski. See [LICENSE](LICENSE) for details.
+Copyright (c) 2015-2020 Jakub Fijałkowski. See [LICENSE](LICENSE) for details.
