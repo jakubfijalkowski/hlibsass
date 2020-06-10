@@ -96,6 +96,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.10.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.9.0...v0.1.10.0
 [0.1.9.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.1...v0.1.9.0
 [0.1.8.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.0...v0.1.8.1
 [0.1.8.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.7.0...v0.1.8.0
