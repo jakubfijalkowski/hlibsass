@@ -45,6 +45,14 @@ hLibsass uses LibSass internally and therefore is quite tightly bound to LibSass
 - hLibsass 0.1.10.x with LibSass 3.6.3 & 3.6.4 (distributed with),
 - LibSass 3.5.x **WILL** have breaking changes and will result in runtime failures of hLibSass versions prior to 0.1.7.0 (and probably compile-time failures too), see [LibSass releases page](https://github.com/sass/libsass/releases) for more details.
 
+### Building on Windows
+
+hLibsass by default builds LibSass as part of it's build process. This means that it will require C & C++ compiler. On Linux that is not a problem most of the time since Clang/GCC is (almost) available on bare systems. On Windows it requires a little bit of additional packages.
+
+The minimum that hLibsass requires is [MinGW-w64](http://mingw-w64.org/). Installing it and compilig hLibsass using it's shell (so that `PATH` is configured correctly) should be enough to get started.
+
+Up until hLibsass 0.1.10, hLibsass required also `env` binary. It is distributed as part of [Cygwin](https://www.cygwin.com/)/[MSYS2](https://www.msys2.org/). The easiest way to use that is to use Stack. It [installs MSYS2](https://docs.haskellstack.org/en/stable/developing_on_windows/) as part of their setup and compiles your packages inside POSIX-compatibile shell. You can follow instructrions on [Stack documentation](https://docs.haskellstack.org/en/stable/developing_on_windows/#cmake) on how to install MinGW-w64 there. 
+
 ### Things to consider
 
 Libsass is C++ library with C API, so in order to use it, it is necessary to provide C++ runtime. This library is linked against `libstdc++` (Windows & Linux)/`libc++` (macOS) automatically, so you don't have to deal with linking process.
