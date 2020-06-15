@@ -38,4 +38,4 @@ install:
 
 script:
   - stack --no-terminal test
-  - LD_LIBRARY_PATH="libsass/lib" stack --no-terminal test --flag hlibsass:sharedlibsass
+  - LD_LIBRARY_PATH="libsass/lib" MAKEFLAGS=-j4 stack --no-terminal test --flag hlibsass:sharedlibsass

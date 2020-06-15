@@ -33,4 +33,5 @@ build_script:
   - stack build
 
 test_script:
+  - set MAKEFLAGS=-j4
   - echo "" | stack --no-terminal test
