@@ -18,7 +18,8 @@ import           Distribution.Simple.Utils          (cabalVersion,
                                                      rawSystemStdout)
 import           Distribution.System
 import qualified Distribution.Verbosity             as Verbosity
-import           System.Directory                   (doesFileExist,
+import           System.Directory                   (doesDirectoryExist,
+                                                     doesFileExist,
                                                      getCurrentDirectory)
 
 #if MIN_VERSION_Cabal(2, 0, 0)
@@ -68,12 +69,15 @@ execMake verbosity build_target target = do
 updateLibsassVersion :: ConfigFlags -> IO ()
 updateLibsassVersion flags = do
     let verbosity = fromFlag $ configVerbosity flags
-    exists <- doesFileExist "libsass/VERSION"
-    unless exists $ do
+    gitDirExists <- doesDirectoryExist "libsass/.git"
+    gitFileExists <- doesFileExist "libsass/.git"
+    verExists <- doesFileExist "libsass/VERSION"
+    -- Force-update VERSION so that we always use valid one as `stack clean` does not run cabal
+    -- clean and we sometimes pack the wrong `VERSION` file
+    when (gitDirExists || gitFileExists || not verExists) $ do
         ver <- rawSystemStdout verbosity "git" ["-C", "libsass", "describe",
             "--abbrev=4", "--dirty", "--always", "--tags"]
         writeFile "libsass/VERSION" ver
-
 
 makeLibsass :: Args -> ConfigFlags -> IO HookedBuildInfo
 makeLibsass _ f = do
