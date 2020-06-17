@@ -1,8 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [0.1.10.0] - 2020-03-26
-### 
+## [0.1.10.1] - 2020-06-17
+### Fixed
+- The package contains correct `libsass/VERSION` file
+- Always generate `libsass/VERSION` file
+
+## [0.1.10.0] - 2020-06-10
+### Changed
 - Update to LibSass 3.6.4
 - Simplify build on Windows
 
@@ -96,6 +101,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.10.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.10.0...v0.1.10.1
 [0.1.10.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.9.0...v0.1.10.0
 [0.1.9.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.1...v0.1.9.0
 [0.1.8.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.0...v0.1.8.1
