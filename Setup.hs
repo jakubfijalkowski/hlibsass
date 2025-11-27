@@ -17,6 +17,9 @@ import           Distribution.Simple.Utils          (cabalVersion,
                                                      rawSystemExit,
                                                      rawSystemStdout)
 import           Distribution.System
+#if MIN_VERSION_Cabal(3, 14, 0)
+import           Distribution.Utils.Path            (makeSymbolicPath)
+#endif
 import qualified Distribution.Verbosity             as Verbosity
 import           System.Directory                   (doesDirectoryExist,
                                                      doesFileExist,
@@ -64,7 +67,11 @@ execMake verbosity build_target target = do
         makeArgs = if null build_target
                       then baseArgs
                       else baseArgs ++ ["BUILD=" ++ build_target]
+#if MIN_VERSION_Cabal(3, 14, 0)
+    rawSystemExit verbosity Nothing makeExec makeArgs
+#else
     rawSystemExit verbosity makeExec makeArgs
+#endif
 
 updateLibsassVersion :: ConfigFlags -> IO ()
 updateLibsassVersion flags = do
@@ -97,7 +104,11 @@ updateLibDirs :: Args -> BuildFlags -> IO HookedBuildInfo
 updateLibDirs _ _ = do
     dir <- getCurrentDirectory
     let libsassDir = dir ++ "/libsass/lib"
+#if MIN_VERSION_Cabal(3, 14, 0)
+        bi = emptyBuildInfo { extraLibDirs = [ (makeSymbolicPath libsassDir) ] }
+#else
         bi = emptyBuildInfo { extraLibDirs = [ libsassDir ] }
+#endif
     return (Just bi, [])
 
 updateExtraLibDirs :: LocalBuildInfo -> IO LocalBuildInfo
@@ -112,7 +123,11 @@ updateExtraLibDirs lbi
             localPkgDescr = pkg_descr {
                 library = Just $ lib {
                     libBuildInfo = libBuild {
+#if MIN_VERSION_Cabal(3, 14, 0)
+                        extraLibDirs = (makeSymbolicPath libPref) : extraLibDirs libBuild
+#else
                         extraLibDirs = libPref : extraLibDirs libBuild
+#endif
                     }
                 }
             }
