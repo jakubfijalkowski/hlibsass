@@ -1,6 +1,6 @@
 resolver: nightly-2020-06-10
 packages:
-- '.'
+- '..'
 extra-deps: []
 flags:
   hlibsass:

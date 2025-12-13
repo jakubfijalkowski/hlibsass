@@ -1,9 +1,0 @@
-resolver: lts-12.26
-packages:
-- '.'
-extra-deps: []
-flags:
-  hlibsass:
-    sharedlibsass: false
-    externallibsass: false
-extra-package-dbs: []

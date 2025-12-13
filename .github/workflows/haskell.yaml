@@ -1,0 +1,58 @@
+name: Haskell CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Stack Build (${{ matrix.stack_yaml }})
+    runs-on: ubuntu-latest
+    
+    env:
+      STACK_YAML: ${{ matrix.stack_yaml }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        stack_yaml:
+          - stack.yaml
+          - stacks/stack-lts-15.3.yaml
+          - stacks/stack-lts-14.yaml
+          - stacks/stack-lts-13.19.yaml
+          - stacks/stack-lts-13.11.yaml
+          - stacks/stack-lts-12.26.yaml
+          - stacks/stack-lts-12.14.yaml
+          - stacks/stack-nightly.yaml
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        # We have to fetch everything, otherwise we won't have tags for submodules
+        fetch-depth: 0
+
+    - uses: haskell-actions/setup@v2
+      with:
+        enable-stack: true
+        stack-version: 'latest'
+
+    - uses: actions/cache@v5
+      name: Cache ~/.stack
+      with:
+        path: ~/.stack
+        key: ${{ runner.os }}-stack-${{ matrix.stack_yaml }}-${{ hashFiles(matrix.stack_yaml) }}
+        restore-keys: |
+          ${{ runner.os }}-stack-${{ matrix.stack_yaml }}-
+          ${{ runner.os }}-stack-
+
+    - name: Install Dependencies
+      run: stack build --only-dependencies
+
+    - name: Build
+      run: stack build
+
+    - name: Test
+      run: stack test --no-terminal
