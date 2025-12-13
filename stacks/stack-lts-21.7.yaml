@@ -1,6 +1,6 @@
-resolver: lts-24.23
+resolver: lts-21.7
 packages:
-- '.'
+- '..'
 extra-deps: []
 flags:
   hlibsass:
