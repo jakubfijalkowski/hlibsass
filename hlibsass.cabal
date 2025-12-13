@@ -1,5 +1,5 @@
 name:                hlibsass
-version:             0.1.10.1
+version:             0.1.10.3
 license:             MIT
 license-file:        LICENSE
 author:              Jakub Fijałkowski <kuba@codinginfinity.me>
@@ -51,7 +51,7 @@ flag sharedLibsass
   default:           False
 
 custom-setup
-  setup-depends: base >= 4.7 && < 5, Cabal >= 1.18, directory >= 1.2.1
+  setup-depends: base >= 4.7 && < 5, Cabal >= 1.18 && < 4, directory >= 1.2.1
 
 library
   exposed-modules:

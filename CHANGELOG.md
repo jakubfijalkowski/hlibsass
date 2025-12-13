@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.10.3] - 2025-12-13
+### Fixed
+- Added support for Cabal >= 3.14
+
+### Changed
+- The package is tested on more Stackage releases
+
 ## [0.1.10.1] - 2020-06-17
 ### Fixed
 - The package contains correct `libsass/VERSION` file
@@ -101,6 +108,7 @@ All notable changes to this project will be documented in this file.
 - Bindings to Libsass C API
 - Basic tests
 
+[0.1.10.3]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.10.1...v0.1.10.3
 [0.1.10.1]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.10.0...v0.1.10.1
 [0.1.10.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.9.0...v0.1.10.0
 [0.1.9.0]: https://github.com/jakubfijalkowski/hlibsass/compare/v0.1.8.1...v0.1.9.0
