@@ -29,6 +29,38 @@ hLibsass supports three different ways of linking with Libsass:
 2. Shared, locally-built LibSass, requires setting `sharedLibsass` flag,
 3. External (e.g. system package), requires setting `externalLibsass` flag.
 
+You can pick your preferred option by editing your projects `stack.yaml` file thus:
+
+``` 
+# THIS SHOULD BE IN YOUR stack.yaml FILE
+
+flags:
+  hlibsass:
+    sharedlibsass: false
+    externallibsass: true
+```
+
+**What do these configuration flags mean?**
+
+| sharedlibsas | externallibsass | Behaviour |
+| --- | --- | --- |
+| false | false | Static, locally built libsass will be used |
+| true | false | Shared, locally built libsass will be used |
+| N/A | true | External libSass provided by your system's package manager will be used. If `externallibsass=true` then the `sharedlibsass` flag is ignored |
+
+**Caveats for using "Static, locally built libsass"**
+
+TODO
+
+**Caveats for using "Shared, locally built libsass"**
+
+TODO
+
+**Caveats for using "External libsass"**
+
+TODO
+
+
 The first two options rely on the LibSass being distributed with the `hlibsass` package and compiled during configure/build process. hLibsass is always distributed with LibSass version that is compatibile with the package.
 
 Up until version `0.1.6.0`, the first option was preferred, because LibSass has been distributed as a source package only. Development package of LibSass is now available in most Linux distributions and in Homebrew, so using it is equally good option
